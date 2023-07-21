@@ -24,8 +24,6 @@ class Connect:
     def engage(self):
         engine = self.cursor("ENGINE")
 
-        print(self.cursor("OPTIONS"))
-
         if engine == "django.db.backends.mysql":
             self.starter = "mysql+pymysql"
             self.query = self.cursor("OPTIONS")
@@ -41,11 +39,13 @@ class Connect:
         elif engine == "mssql":
             self.starter = "mssql+pyodbc"
             query = self.cursor("OPTIONS")
-            if "extra_params" in self.cursor("OPTIONS").keys():
-                query.pop("extra_params")
-                key_value_pairs = self.cursor("OPTIONS")["extra_params"].strip(";").split(";")
-                query.update({kv.split("=")[0]: kv.split("=")[1] for kv in key_value_pairs})
-            self.query = query
+            new_query = {}
+            if "extra_params" in query.keys():
+                key_value_pairs = query["extra_params"].strip(";").split(";")
+                new_query.update({kv.split("=")[0]: kv.split("=")[1] for kv in key_value_pairs})
+            query.pop("extra_params")
+            new_query.update(query)
+            self.query = new_query
 
         else:
             raise Exception("The database engine {} is not yet supported.".format(engine))
