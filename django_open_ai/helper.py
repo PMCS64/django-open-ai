@@ -24,6 +24,8 @@ class Connect:
     def engage(self):
         engine = self.cursor("ENGINE")
 
+        print(self.cursor("OPTIONS"))
+
         if engine == "django.db.backends.mysql":
             self.starter = "mysql+pymysql"
             self.query = self.cursor("OPTIONS")
