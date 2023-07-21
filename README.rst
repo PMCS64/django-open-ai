@@ -9,7 +9,7 @@ Installation
 
 You can install the package using pip::
 
-    #pip install django-open-ai
+    pip install django-open-ai
 
 Quick start
 ----------------------------------------
