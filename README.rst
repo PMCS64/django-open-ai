@@ -3,14 +3,14 @@ django-open-ai
 ===============
 
 Installation
------------
+----------------------------------------
 
 You can install the package using pip::
 
     #pip install django-open-ai
 
 Quick start
------------
+----------------------------------------
 
 1. Add "django_open_ai" to your INSTALLED_APPS setting like this::
 
