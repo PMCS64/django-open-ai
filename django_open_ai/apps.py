@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class OpenAiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'django-open-ai'
+    name = 'django_open_ai'
