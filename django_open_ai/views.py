@@ -7,19 +7,24 @@ from . import helper, forms
 # Create your views here.
 
 
-class DjangoOpenAI(views.View):
+class OpenAIView(views.View):
 
-    database = "default"
-    connection = helper.Connect(database=database)
-    connection.engage()
-    data = connection.data()
-    ai = helper.DjangoAI(data)
-    template = "form.html"
-    form = forms.AIMessage()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.database = "default"
+        self.connection = helper.Connect(database=database)
+        self.connection.engage()
+        self.data = connection.data()
+        self.ai = helper.DjangoAI(data)
+        self.request = None
 
-    def post(self, req):
-        response = self.ai.think(req.POST["message"])
-        return JsonResponse(data={"response": response})
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        super().dispatch(request, *args, **kwargs)
 
-    def get(self, req):
-        return render(request=req, template_name=self.template, context={"form": self.form})
+    @property
+    def message(self):
+        return self.kwargs["message"] if "message" in self.kwargs else None
+
+    def get(self):
+        return JsonResponse(data={"response": self.ai.think(self.message)})

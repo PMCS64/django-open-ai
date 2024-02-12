@@ -48,7 +48,7 @@ class Connect:
             self.query = new_query
 
         else:
-            raise Exception("The database engine {} is not yet supported.".format(engine))
+            raise Exception(f"The database engine {engine} is not yet supported. Please use one of 'django.db.backends.mysql', 'django.db.backends.postgresql', 'django.db.backends.oracle', or 'mssql' from mssql-django.")
 
     def connection_uri(self):
         return URL.create(
